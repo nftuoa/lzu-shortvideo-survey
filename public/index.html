@@ -47,6 +47,7 @@ small{color:var(--muted)}
 .divider{height:1px;background:linear-gradient(90deg,transparent,#ece9e3,transparent);margin:14px 0}
 @media (max-width:640px){.likert{grid-template-columns:1fr repeat(5,38px)}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -209,13 +210,33 @@ form.addEventListener('submit', async e=>{
     duration_seconds
   };
   if(payload.att!==5) return alert('注意力检测题请选择“非常同意”(5)');
+  const SUPABASE_URL = 'https://cdebutpykrqzfiqhkpib.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZWJ1dHB5a3JxemZpcWhrcGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTcxMjEsImV4cCI6MjEwMjc5MzEyMX0.O3CIa4hVd_zJD7b2pE0CErYLBDxZIQ98ho8LUUGPqVQ';
+  const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='提交中...';
+  // 计算均分
+  const avg2 = arr => +(arr.reduce((s,v)=>s+v,0)/arr.length).toFixed(2);
+  const dbPayload = {
+    a1_gender: payload.a1_gender, a2_grade: payload.a2_grade, a3_college: payload.a3_college, a4_expense: payload.a4_expense, a5_hometown: payload.a5_hometown,
+    a6_self: payload.a6_self, a6_obj: payload.a6_obj,
+    b1_platform: payload.b1_platform, b2_duration: payload.b2_duration, b2_duration_min: ({'<30分钟':15,'30-60分钟':45,'1-2小时':90,'2-3小时':150,'>3小时':210}[payload.b2_duration]||null), b3_freq: payload.b3_freq, b3_freq_count: ({'<3次':2,'3-5次':4,'6-10次':8,'>10次':12}[payload.b3_freq]||null), b4_prefs: payload.b4_prefs, b5_live_freq: payload.b5_live_freq,
+    b6_1: payload.b6_1, b6_2: payload.b6_2, b6_3: payload.b6_3, b6_avg: avg2([payload.b6_1,payload.b6_2,payload.b6_3]),
+    b7_1: payload.b7_1, b7_2: payload.b7_2, b7_3: payload.b7_3, b7_4: payload.b7_4, b7_avg: avg2([payload.b7_1,payload.b7_2,payload.b7_3,payload.b7_4]),
+    c1_1: payload.c1_1, c1_2: payload.c1_2, c1_3: payload.c1_3, c1_4: payload.c1_4, c1_avg: avg2([payload.c1_1,payload.c1_2,payload.c1_3,payload.c1_4]),
+    c2_1: payload.c2_1, c2_2: payload.c2_2, c2_3: payload.c2_3, c2_avg: avg2([payload.c2_1,payload.c2_2,payload.c2_3]),
+    c3_1: payload.c3_1, c3_2: payload.c3_2, c3_3: payload.c3_3, c3_4: payload.c3_4, c3_5: payload.c3_5, c3_avg: avg2([payload.c3_1,payload.c3_2,payload.c3_3,payload.c3_4,payload.c3_5]),
+    att_correct: true, mk1: payload.mk1, mk2: payload.mk2, d1_regret: payload.d1_regret,
+    d1_1: payload.d1_1, d1_2: payload.d1_2, d1_3: payload.d1_3, d1_4: payload.d1_4, d1_avg: avg2([payload.d1_1,payload.d1_2,payload.d1_3,payload.d1_4]),
+    d2_1: payload.d2_1, d2_2: payload.d2_2, d2_3: payload.d2_3, d2_4: payload.d2_4, d2_avg: avg2([payload.d2_1,payload.d2_2,payload.d2_3,payload.d2_4]),
+    e1_1: payload.e1_1, e1_2: payload.e1_2, e1_3: payload.e1_3, e1_avg: avg2([payload.e1_1,payload.e1_2,payload.e1_3]),
+    e2_choices: payload.e2_choices, e2_moment: payload.e2_moment, e2_tip: payload.e2_tip,
+    duration_seconds: payload.duration_seconds, user_agent: navigator.userAgent
+  };
   try{
-    const r=await fetch('/api/submit', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-    const j=await r.json();
-    if(j.ok){ document.getElementById('msg').textContent='提交成功，感谢参与！编号 #'+j.id; document.getElementById('msg').style.color='#1a7f37'; form.reset(); document.getElementById('bar').style.width='0%'; document.getElementById('progText').textContent='0%'; window.scrollTo({top:0,behavior:'smooth'}); }
-    else { document.getElementById('msg').textContent='提交失败：'+(j.msg||r.statusText); document.getElementById('msg').style.color='#d1242f'; btn.disabled=false; btn.textContent='提交问卷 ✨'; }
-  }catch(err){ document.getElementById('msg').textContent='网络错误：'+err.message; document.getElementById('msg').style.color='#d1242f'; btn.disabled=false; btn.textContent='提交问卷 ✨'; }
+    const { data, error } = await supa.from('survey_responses').insert(dbPayload).select('id');
+    if(error) throw error;
+    document.getElementById('msg').textContent='提交成功，感谢参与！编号 #'+data[0].id; document.getElementById('msg').style.color='#1a7f37'; form.reset(); document.getElementById('bar').style.width='0%'; document.getElementById('progText').textContent='0%'; window.scrollTo({top:0,behavior:'smooth'});
+  }catch(err){ document.getElementById('msg').textContent='提交失败：'+(err.message||err); document.getElementById('msg').style.color='#d1242f'; btn.disabled=false; btn.textContent='提交问卷 ✨'; }
 });
 </script>
 </body>
