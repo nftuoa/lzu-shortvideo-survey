@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/submit.js": { "maxDuration": 10 },
+    "api/health.js": { "maxDuration": 5 }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/public/$1" }]
+}
