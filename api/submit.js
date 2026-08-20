@@ -5,7 +5,7 @@ let pool;
 function getPool() {
   if (pool) return pool;
   const connStr = process.env.DATABASE_URL;
-  if (!connStr) throw new Error('DATABASE_URL not set');
+  if (!connStr) throw new Error('DATABASE_URL not set - 请在 Vercel 环境变量中配置 Pooler 连接串 (aws-0-...pooler.supabase.com:6543?pgbouncer=true)，直连 db.* 为 IPv6-only 会导致 ENOTFOUND');
   pool = new Pool({
     connectionString: connStr,
     ssl: { rejectUnauthorized: false },

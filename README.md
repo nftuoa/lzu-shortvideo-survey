@@ -16,7 +16,7 @@ survey-site/
 cd survey-site
 npm install
 # 设置本地环境变量（不要提交）
-echo 'DATABASE_URL=postgresql://postgres:Mo2939829009@db.cdebutpykrqzfiqhkpib.supabase.co:5432/postgres' > .env
+echo 'DATABASE_URL=postgresql://postgres.cdebutpykrqzfiqhkpib:Mo2939829009@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true' > .env
 # 建表（本地 psql）
 psql "$DATABASE_URL" -f sql/schema.sql
 # 本地预览（需 Vercel CLI）
