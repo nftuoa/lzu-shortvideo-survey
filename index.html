@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>大学生短视频使用与消费观调查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+:root{--bg:#fbf8f3;--card:#ffffff;--pri:#7c5cbf;--pri2:#ff7a7a;--pri3:#2ec4b6;--text:#2b2d42;--muted:#8d99ae;--bd:#ece9e3;--shadow:0 8px 30px rgba(44,26,73,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14.5px/1.7 "PingFang SC","Microsoft YaHei",Inter,system-ui,-apple-system,sans-serif}
+a{color:var(--pri)}
+.header{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#6d3df0 0%,#b14bf0 45%,#ff7a7a 100%);color:#fff;padding:18px 16px 14px;box-shadow:0 4px 20px rgba(109,61,240,.25)}
+.header-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.header h1{margin:0;font-size:20px;letter-spacing:.5px;font-weight:800;display:flex;align-items:center;gap:10px}
+.header h1 span{font-size:12px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:3px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+.header p{margin:4px 0 0;font-size:12.5px;opacity:.9;max-width:900px;margin-left:auto;margin-right:auto}
+.progress{height:8px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden;max-width:900px;margin:10px auto 0}
+.bar{height:100%;width:0;background:#fff;transition:width .35s ease;box-shadow:0 0 10px rgba(255,255,255,.6)}
+.container{max-width:900px;margin:22px auto;padding:0 16px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px 22px;margin:18px 0;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pri),var(--pri2),var(--pri3));opacity:.9}
+.card h2{margin:0 0 6px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+.card h2 i{width:8px;height:8px;border-radius:50%;background:var(--pri);display:inline-block;box-shadow:0 0 0 6px rgba(124,92,191,.12)}
+.card h3{margin:18px 0 8px;font-size:13px;letter-spacing:.4px;color:#5a189a;text-transform:uppercase;font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>label{flex:1 1 160px;background:#fbf8ff;border:1px solid #ede9fe;border-radius:12px;padding:9px 12px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:8px}
+.row>label:hover{border-color:#c4b5fd;background:#f5f3ff;transform:translateY(-1px)}
+.row>label:has(input:checked){background:linear-gradient(135deg,#ede9fe,#fff0f6);border-color:var(--pri);box-shadow:0 4px 12px rgba(124,92,191,.15)}
+input[type=radio],input[type=checkbox]{accent-color:var(--pri)}
+input[type=text],select,textarea{width:100%;padding:10px 12px;border:1.5px solid #e9e7ff;border-radius:12px;background:#fcfcff;transition:.15s;font:inherit}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);background:#fff;box-shadow:0 0 0 4px rgba(124,92,191,.12)}
+.likert{display:grid;grid-template-columns:1fr repeat(5,46px);align-items:center;gap:6px;padding:10px 8px;border-radius:12px;margin:6px 0;background:#fcfcff;border:1px solid transparent}
+.likert:nth-child(even){background:#fff}
+.likert:hover{border-color:#e9e7ff}
+.likert .q{font-weight:500}
+.likert label{justify-self:center;background:#fff;border:1px solid #e9e7ff;border-radius:10px;width:36px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.likert label:has(input:checked){background:var(--pri);color:#fff;border-color:var(--pri)}
+.likert input{position:absolute;opacity:0;pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);color:#5a189a;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.btn{appearance:none;background:linear-gradient(135deg,var(--pri),#ff7a7a);color:#fff;border:0;padding:12px 22px;border-radius:999px;cursor:pointer;font-weight:800;letter-spacing:.3px;box-shadow:0 8px 18px rgba(124,92,191,.25);transition:.15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(124,92,191,.32)}
+.btn:disabled{opacity:.5;transform:none}
+small{color:var(--muted)}
+.hero{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.hero .pill{background:#fff;color:#5a189a;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;box-shadow:var(--shadow)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,#ece9e3,transparent);margin:14px 0}
+@media (max-width:640px){.likert{grid-template-columns:1fr repeat(5,38px)}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <h1>大学生短视频使用与消费观调查 <span>匿名 · 约8分钟</span></h1>
+    <div id="progText" style="font-weight:800;opacity:.95">0%</div>
+  </div>
+  <div class="progress"><div id="bar" class="bar"></div></div>
+  <p style="max-width:900px;margin:8px auto 0;opacity:.92">短视频如何影响我们的消费观念？诚邀你用8分钟完成这份学术问卷</p>
+</div>
+
+<div class="container">
+<form id="form">
+  <div class="card">
+    <h2><i></i> 填写说明</h2>
+    <p style="margin:8px 0 0;color:#4a4453">同学你好！本问卷为学术研究，<b>匿名填写</b>，数据仅作聚合分析，不收集姓名学号，无对错之分，请按真实情况作答。参与自愿，可随时退出。数据保存1年后销毁。</p>
+    <div class="hero">
+      <span class="pill">🔒 匿名</span><span class="pill">⏱ 8分钟</span><span class="pill">🎓 学术用途</span>
+    </div>
+    <label style="margin-top:14px;display:flex;align-items:center;gap:8px;background:#f5f3ff;border:1px solid #ddd6fe;padding:10px 12px;border-radius:12px"><input type="checkbox" id="consent" required> 我已阅读以上说明，了解匿名原则，自愿参与（必选）</label>
+  </div>
+
+  <div class="card">
+    <h2><i style="background:var(--pri2)"></i> 模块A 人口学与经济背景</h2>
+    <h3>A1 性别</h3>
+    <div class="row"><label><input type="radio" name="a1_gender" value="男" required> 男</label><label><input type="radio" name="a1_gender" value="女"> 女</label><label><input type="radio" name="a1_gender" value="其他"> 其他</label><label><input type="radio" name="a1_gender" value="不愿透露"> 不愿透露</label></div>
+    <h3>A2 年级</h3>
+    <div class="row"><label><input type="radio" name="a2_grade" value="大一" required> 大一</label><label><input type="radio" name="a2_grade" value="大二"> 大二</label><label><input type="radio" name="a2_grade" value="大三"> 大三</label><label><input type="radio" name="a2_grade" value="大四"> 大四</label></div>
+    <h3>A3 学部/学院</h3>
+    <label style="background:transparent;border:0;padding:0">学院 <input type="text" name="a3_college" placeholder="人文社科 / 理工 / 医科 / 其他（填空）" required></label>
+    <h3>A4 月均可支配生活费</h3>
+    <div class="row"><label><input type="radio" name="a4_expense" value="<1500元" required> &lt;1500元</label><label><input type="radio" name="a4_expense" value="1500-2499元"> 1500-2499元</label><label><input type="radio" name="a4_expense" value="2500-3999元"> 2500-3999元</label><label><input type="radio" name="a4_expense" value="≥4000元"> ≥4000元</label><label><input type="radio" name="a4_expense" value="不愿透露"> 不愿透露</label></div>
+    <h3>A5 家庭所在地</h3>
+    <div class="row"><label><input type="radio" name="a5_hometown" value="一线/新一线城市" required> 一线/新一线</label><label><input type="radio" name="a5_hometown" value="二三线城市"> 二三线城市</label><label><input type="radio" name="a5_hometown" value="县城/乡镇"> 县城/乡镇</label><label><input type="radio" name="a5_hometown" value="农村"> 农村</label><label><input type="radio" name="a5_hometown" value="不愿透露"> 不愿透露</label></div>
+    <h3>A6 财务素养</h3>
+    <small>A6-a 自评 1=非常不符合 5=非常符合</small>
+    <div class="likert"><div>①我能理解分期/花呗的利息成本</div><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="likert"><div class="q"></div><label><input type="radio" name="a6a1" value="1" required>1</label><label><input type="radio" name="a6a1" value="2">2</label><label><input type="radio" name="a6a1" value="3">3</label><label><input type="radio" name="a6a1" value="4">4</label><label><input type="radio" name="a6a1" value="5">5</label></div>
+    <div class="likert"><div>②我会做月度预算并执行</div><label><input type="radio" name="a6a2" value="1" required>1</label><label><input type="radio" name="a6a2" value="2">2</label><label><input type="radio" name="a6a2" value="3">3</label><label><input type="radio" name="a6a2" value="4">4</label><label><input type="radio" name="a6a2" value="5">5</label></div>
+    <div class="likert"><div>③我能清晰区分“需要”与“想要”</div><label><input type="radio" name="a6a3" value="1" required>1</label><label><input type="radio" name="a6a3" value="2">2</label><label><input type="radio" name="a6a3" value="3">3</label><label><input type="radio" name="a6a3" value="4">4</label><label><input type="radio" name="a6a3" value="5">5</label></div>
+    <h3>A6-b 客观知识（选“不知道”不扣分）</h3>
+    <label>假设年利率2%，100元存5年：<select name="a6b1" required><option value="">请选择</option><option>100元以上</option><option>恰好102元</option><option>低于102元</option><option>不知道</option></select></label>
+    <label>通胀2%而储蓄利率1%，一年后购买力：<select name="a6b2" required><option value="">请选择</option><option>上升</option><option>不变</option><option>下降</option><option>不知道</option></select></label>
+    <label>单只股票比股票型基金更安全：<select name="a6b3" required><option value="">请选择</option><option>是</option><option>否</option><option>不知道</option></select></label>
+  </div>
+
+  <div class="card">
+    <h2><i style="background:var(--pri3)"></i> 模块B 短视频使用行为</h2>
+    <h3>B1 最常使用平台</h3>
+    <div class="row"><label><input type="radio" name="b1_platform" value="抖音" required> 抖音</label><label><input type="radio" name="b1_platform" value="快手"> 快手</label><label><input type="radio" name="b1_platform" value="B站"> B站</label><label><input type="radio" name="b1_platform" value="小红书"> 小红书</label><label><input type="radio" name="b1_platform" value="视频号"> 视频号</label><label><input type="radio" name="b1_platform" value="其他"> 其他</label></div>
+    <h3>B2 日均使用时长</h3>
+    <div class="row"><label><input type="radio" name="b2_duration" value="<30分钟" required> &lt;30分钟</label><label><input type="radio" name="b2_duration" value="30-60分钟"> 30-60分钟</label><label><input type="radio" name="b2_duration" value="1-2小时"> 1-2小时</label><label><input type="radio" name="b2_duration" value="2-3小时"> 2-3小时</label><label><input type="radio" name="b2_duration" value=">3小时"> &gt;3小时</label></div>
+    <h3>B3 日均打开频率</h3>
+    <div class="row"><label><input type="radio" name="b3_freq" value="<3次" required> &lt;3次</label><label><input type="radio" name="b3_freq" value="3-5次"> 3-5次</label><label><input type="radio" name="b3_freq" value="6-10次"> 6-10次</label><label><input type="radio" name="b3_freq" value=">10次"> &gt;10次</label></div>
+    <h3>B4 内容偏好（限选1-3项）</h3>
+    <div class="row">
+      <label><input type="checkbox" name="b4" value="搞笑/剧情"> 搞笑/剧情</label><label><input type="checkbox" name="b4" value="美妆穿搭"> 美妆穿搭</label><label><input type="checkbox" name="b4" value="探店/美食"> 探店/美食</label><label><input type="checkbox" name="b4" value="学习/知识"> 学习/知识</label><label><input type="checkbox" name="b4" value="带货直播/种草"> 带货直播/种草</label><label><input type="checkbox" name="b4" value="炫富/奢侈品展示"> 炫富/奢侈品</label><label><input type="checkbox" name="b4" value="校园生活/日常"> 校园生活</label>
+    </div>
+    <h3>B5 直播带货观看频率</h3>
+    <div class="row"><label><input type="radio" name="b5_live_freq" value="从不" required> 从不</label><label><input type="radio" name="b5_live_freq" value="偶尔（月均1-2次）"> 偶尔</label><label><input type="radio" name="b5_live_freq" value="每周1-2次"> 每周1-2次</label><label><input type="radio" name="b5_live_freq" value="每周3次及以上"> 每周3次及以上</label></div>
+    <h3>B6 算法推荐感知（1=非常不同意 5=非常同意）</h3>
+    <div id="b6"></div>
+    <h3>B7 在场感（1=非常不同意 5=非常同意）</h3>
+    <div id="b7"></div>
+  </div>
+
+  <div class="card">
+    <h2><i></i> 模块C 心理机制</h2>
+    <small>1=非常不同意 5=非常同意</small>
+    <div id="c1"></div>
+    <div id="c2"></div>
+    <div id="c3"></div>
+    <h3>注意力检测（必答）</h3>
+    <div class="likert"><div>为检验您是否认真作答，本题请选择“非常同意”</div><label><input type="radio" name="att" value="1" required>1</label><label><input type="radio" name="att" value="2">2</label><label><input type="radio" name="att" value="3">3</label><label><input type="radio" name="att" value="4">4</label><label><input type="radio" name="att" value="5">5</label></div>
+    <h3>标记变量（与主题无关）</h3>
+    <div class="likert"><div>我喜欢蓝色</div><label><input type="radio" name="mk1" value="1" required>1</label><label><input type="radio" name="mk1" value="2">2</label><label><input type="radio" name="mk1" value="3">3</label><label><input type="radio" name="mk1" value="4">4</label><label><input type="radio" name="mk1" value="5">5</label></div>
+    <div class="likert"><div>我更喜欢晴天而非雨天</div><label><input type="radio" name="mk2" value="1" required>1</label><label><input type="radio" name="mk2" value="2">2</label><label><input type="radio" name="mk2" value="3">3</label><label><input type="radio" name="mk2" value="4">4</label><label><input type="radio" name="mk2" value="5">5</label></div>
+  </div>
+
+  <div class="card">
+    <h2><i style="background:#ffb703"></i> 模块D 冲动性消费</h2>
+    <div id="d1"></div>
+    <div class="likert"><div>买完后我常后悔当时太冲动（效标题，不计入维度）</div><label><input type="radio" name="d1_regret" value="1" required>1</label><label><input type="radio" name="d1_regret" value="2">2</label><label><input type="radio" name="d1_regret" value="3">3</label><label><input type="radio" name="d1_regret" value="4">4</label><label><input type="radio" name="d1_regret" value="5">5</label></div>
+    <div id="d2"></div>
+  </div>
+
+  <div class="card">
+    <h2><i style="background:var(--pri)"></i> 模块E 自我控制与引导需求</h2>
+    <div id="e1"></div>
+    <h3>E2 你希望获得哪类引导？（多选，选“不需要”则互斥）</h3>
+    <div class="row">
+      <label><input type="checkbox" name="e2" value="学校财商课程"> 学校财商课程</label><label><input type="checkbox" name="e2" value="媒介素养/算法识别教育"> 媒介素养</label><label><input type="checkbox" name="e2" value="平台增加冷静期/消费提醒"> 平台冷静期</label><label><input type="checkbox" name="e2" value="家庭财商沟通"> 家庭财商沟通</label><label><input type="checkbox" name="e2" value="自我管理工具"> 自我管理工具</label><label><input type="checkbox" name="e2" value="不需要" id="e2_none"> 不需要</label>
+    </div>
+    <label>E2-2 最让你“忍不住买”的瞬间（选填）<textarea name="e2_moment" rows="2" placeholder="如：限时秒杀倒计时、主播说最后10件..."></textarea></label>
+    <label>E2-3 最有效的一招防冲动（选填）<textarea name="e2_tip" rows="2" placeholder="如：放购物车24小时再买..."></textarea></label>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="btn" type="submit" id="submitBtn">提交问卷 ✨</button>
+    <p id="msg" style="margin-top:12px;font-weight:700"></p>
+    <small>提交即代表同意匿名数据用于学术研究 · 已记录作答时长用于质控</small>
+  </div>
+</form>
+</div>
+
+<script>
+const start = Date.now();
+const likert = (name, text) => `<div class="likert"><div>${text}</div>`+ [1,2,3,4,5].map(v=>`<label><input type="radio" name="${name}" value="${v}" required>${v}</label>`).join('')+`</div>`;
+const fill = (id, items) => document.getElementById(id).innerHTML = items.map(([k,t])=>likert(k,t)).join('');
+fill('b6',[['b6_1','刷到的商品/种草视频大多是算法根据我的喜好推荐的'],['b6_2','算法推荐让我看到了许多原本没计划看的商品/内容'],['b6_3','我能明显感觉到推荐内容越来越懂我的偏好']]);
+fill('b7',[['b7_1','看带货直播时，我感觉主播就像在我面前面对面介绍一样真实'],['b7_2','直播间里其他人的抢购、弹幕让我感觉大家一起在场、一起买'],['b7_3','直播间的倒计时、库存紧张提示让我感到身临其境的现场紧迫感'],['b7_4','直播时我感觉自己与主播和其他观众处在同一个虚拟空间里互动']]);
+fill('c1',[['c1_1','短视频/直播常给我带来新的消费灵感和想法'],['c1_2','看到短视频中的搭配/用法，我会想象自己也这样搭配/使用'],['c1_3','短视频让我发现了原本没意识到的需求'],['c1_4','看完短视频/直播后，我常有“想立刻去尝试/了解”的灵感冲动']]);
+fill('c2',[['c2_1','刷到同学/博主的精致生活，我会拿自己的生活与他们对比'],['c2_2','看到他人晒出的消费品/生活方式，我会将自己的消费水平与他们比较'],['c2_3','看到他人精致的消费展示后，我会觉得自己相对较差/不够好']]);
+fill('c3',[['c3_1','拥有更多物质财富是衡量成功的重要标志'],['c3_2','我羡慕拥有昂贵物品的人'],['c3_3','拥有令人羡慕的物品会让我更有面子'],['c3_4','消费/购物能有效提升我的幸福感'],['c3_5','我常通过购买来证明自己的价值']]);
+fill('d1',[['d1_1','看到短视频推荐的商品，我常不加思考就下单'],['d1_2','我常因直播间“限时优惠/最后几件”而买了原本不需要的东西'],['d1_3','我购买前会认真对比和思考（反向）'],['d1_4','“先买了再说”是我的常见购物方式']]);
+fill('d2',[['d2_1','我常因追求潮流/爆款而购买超出实际需要的商品'],['d2_2','为了在社交/同学面前不丢面子，有时会超出预算消费'],['d2_3','我认同“超前消费、分期付款很正常/没什么风险”'],['d2_4','我会因短视频种草而超出原定的消费计划/预算']]);
+fill('e1',[['e1_1','我能抵制诱惑，坚持原计划'],['e1_2','我很难改掉坏习惯（反向）'],['e1_3','我能控制自己的消费冲动']]);
+document.getElementById('e2_none').addEventListener('change', e=>{
+  if(e.target.checked) document.querySelectorAll('input[name="e2"]').forEach(c=>{ if(c!==e.target) {c.checked=false; c.disabled=true}}); else document.querySelectorAll('input[name="e2"]').forEach(c=>c.disabled=false);
+});
+document.querySelectorAll('input[name="b4"]').forEach(c=>c.addEventListener('change',()=>{
+  const n=document.querySelectorAll('input[name="b4"]:checked').length;
+  if(n>3){c.checked=false; alert('B4最多选3项');}
+}));
+const form=document.getElementById('form');
+form.addEventListener('input',()=>{
+  const names=new Set([...form.querySelectorAll('input[type=radio][required]')].map(r=>r.name));
+  let done=0; names.forEach(n=>{ if(form.querySelector(`input[name="${n}"]:checked`)) done++});
+  const selDone=[...form.querySelectorAll('select[required]')].filter(s=>s.value).length;
+  const total = names.size + 3;
+  const pct=Math.round((done+selDone)/ total *100);
+  document.getElementById('bar').style.width=pct+'%';
+  document.getElementById('progText').textContent=pct+'%';
+});
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+  if(!document.getElementById('consent').checked) return alert('请先勾选知情同意');
+  const fd=new FormData(form);
+  const b4=[...document.querySelectorAll('input[name="b4"]:checked')].map(c=>c.value);
+  if(b4.length<1||b4.length>3) return alert('B4请选择1-3项');
+  const e2=[...document.querySelectorAll('input[name="e2"]:checked')].map(c=>c.value);
+  const duration_seconds=Math.round((Date.now()-start)/1000);
+  if(duration_seconds<10) return alert('答题过快，请认真作答');
+  const getV=n=>{ const v=fd.get(n); return v? parseInt(v,10): null };
+  const payload={
+    a1_gender:fd.get('a1_gender'), a2_grade:fd.get('a2_grade'), a3_college:fd.get('a3_college'), a4_expense:fd.get('a4_expense'), a5_hometown:fd.get('a5_hometown'),
+    a6_self: +((getV('a6a1')+getV('a6a2')+getV('a6a3'))/3).toFixed(2),
+    a6_obj: ( (fd.get('a6b1')==='100元以上'?1:0) + (fd.get('a6b2')==='下降'?1:0) + (fd.get('a6b3')==='否'?1:0) ),
+    b1_platform:fd.get('b1_platform'), b2_duration:fd.get('b2_duration'), b3_freq:fd.get('b3_freq'), b4_prefs:b4, b5_live_freq:fd.get('b5_live_freq'),
+    b6_1:getV('b6_1'), b6_2:getV('b6_2'), b6_3:getV('b6_3'),
+    b7_1:getV('b7_1'), b7_2:getV('b7_2'), b7_3:getV('b7_3'), b7_4:getV('b7_4'),
+    c1_1:getV('c1_1'), c1_2:getV('c1_2'), c1_3:getV('c1_3'), c1_4:getV('c1_4'),
+    c2_1:getV('c2_1'), c2_2:getV('c2_2'), c2_3:getV('c2_3'),
+    c3_1:getV('c3_1'), c3_2:getV('c3_2'), c3_3:getV('c3_3'), c3_4:getV('c3_4'), c3_5:getV('c3_5'),
+    att:getV('att'), mk1:getV('mk1'), mk2:getV('mk2'), d1_regret:getV('d1_regret'),
+    d1_1:getV('d1_1'), d1_2:getV('d1_2'), d1_3: 6-getV('d1_3'), d1_4:getV('d1_4'),
+    d2_1:getV('d2_1'), d2_2:getV('d2_2'), d2_3:getV('d2_3'), d2_4:getV('d2_4'),
+    e1_1:getV('e1_1'), e1_2: 6-getV('e1_2'), e1_3:getV('e1_3'),
+    e2_choices:e2, e2_moment:fd.get('e2_moment'), e2_tip:fd.get('e2_tip'),
+    duration_seconds
+  };
+  if(payload.att!==5) return alert('注意力检测题请选择“非常同意”(5)');
+  const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='提交中...';
+  try{
+    const r=await fetch('/api/submit', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j=await r.json();
+    if(j.ok){ document.getElementById('msg').textContent='提交成功，感谢参与！编号 #'+j.id; document.getElementById('msg').style.color='#1a7f37'; form.reset(); document.getElementById('bar').style.width='0%'; document.getElementById('progText').textContent='0%'; window.scrollTo({top:0,behavior:'smooth'}); }
+    else { document.getElementById('msg').textContent='提交失败：'+(j.msg||r.statusText); document.getElementById('msg').style.color='#d1242f'; btn.disabled=false; btn.textContent='提交问卷 ✨'; }
+  }catch(err){ document.getElementById('msg').textContent='网络错误：'+err.message; document.getElementById('msg').style.color='#d1242f'; btn.disabled=false; btn.textContent='提交问卷 ✨'; }
+});
+</script>
+</body>
+</html>
