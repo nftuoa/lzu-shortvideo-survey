@@ -49,3 +49,7 @@ psql "$DATABASE_URL" -c "copy (select * from survey_responses) to stdout with cs
 - 绝对不要把 DATABASE_URL 提交到 Git，已用 .gitignore 忽略 .env
 - 你贴出的密码已在 Supabase Dashboard 暴露，建议去 Database -> Reset password 立即重置，并同步更新 Vercel 环境变量
 - 前端已做注意力检测(att=5)与时长/互斥校验，后端二次校验，满足 02 质控要求
+
+## 在线访问（大陆可打开）
+- GitHub Pages: http://www.nftuoa.top/lzu-shortvideo-survey/ （或 https://nftuoa.github.io/lzu-shortvideo-survey/ ）
+- Vercel（备用，墙外）: https://lzu-shortvideo-survey.vercel.app
